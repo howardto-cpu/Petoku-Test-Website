@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Petoku — Dental Powder for Dogs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            blue: {
+              primary: '#86b2c5',
+              dark:    '#3d809b',
+              deeper:  '#2e6a82',
+              light:   '#c4dce8',
+              pale:    '#e8f1f5',
+            },
+            cream: '#f8f6f3',
+            ink:   '#111111',
+          },
+          fontFamily: {
+            display: ['"DM Serif Display"', 'Georgia', 'serif'],
+            body:    ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tightest: '-0.04em',
+            tighter:  '-0.03em',
+            wide:     '0.08em',
+            widest:   '0.14em',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+*, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background-color: #f8f6f3; font-family: 'DM Sans', system-ui, sans-serif; color: #111111; }
+
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: 0.12s; }
+    .reveal.delay-2 { transition-delay: 0.24s; }
+    .reveal.delay-3 { transition-delay: 0.38s; }
+    .reveal.delay-4 { transition-delay: 0.52s; }
+
+    .nav-link {
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.9375rem;
+      color: #111; text-decoration: none; padding: 6px 0; position: relative;
+    }
+    .nav-link::after {
+      content: ''; display: block; height: 2px; background: #86b2c5;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-link:hover { color: #3d809b; }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link:focus-visible { outline: 2px solid #86b2c5; outline-offset: 4px; border-radius: 2px; }
+
+    .btn-primary {
+      background-color: #3d809b; color: #fff;
+      padding: 14px 32px; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9375rem;
+      letter-spacing: 0.01em; border: none; cursor: pointer; display: inline-block;
+      box-shadow: 0 4px 16px rgba(61,128,155,0.3), 0 1px 4px rgba(61,128,155,0.2);
+      transition: background-color 0.2s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover  { background-color: #2e6a82; transform: scale(1.04) translateY(-1px); box-shadow: 0 8px 28px rgba(61,128,155,0.38); }
+    .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(61,128,155,0.2); }
+    .btn-primary:focus-visible { outline: 3px solid #86b2c5; outline-offset: 3px; }
+
+    .btn-outline {
+      background-color: transparent; color: #3d809b;
+      padding: 12px 28px; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9375rem;
+      border: 2px solid #3d809b; cursor: pointer; display: inline-block;
+      transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+      text-decoration: none;
+    }
+    .btn-outline:hover  { background-color: #3d809b; color: #fff; transform: scale(1.04) translateY(-1px); }
+    .btn-outline:active { transform: scale(0.97); }
+    .btn-outline:focus-visible { outline: 3px solid #86b2c5; outline-offset: 3px; }
+
+    .badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: #e8f1f5; color: #3d809b;
+      padding: 6px 14px; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.8125rem; font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .badge-dark { background: #3d809b; color: #fff; }
+
+    .section-label {
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; color: #86b2c5;
+    }
+
+    @keyframes marquee-scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .marquee-track {
+      display: flex; align-items: center; width: max-content;
+      animation: marquee-scroll 36s linear infinite;
+    }
+    .marquee-track:hover { animation-play-state: paused; }
+    .marquee-item {
+      white-space: nowrap; padding: 0 28px;
+      font-family: 'DM Sans', sans-serif; font-size: 0.875rem; font-weight: 500;
+      color: #3d809b; letter-spacing: 0.02em;
+    }
+    .marquee-dot { color: #86b2c5; font-size: 1.1rem; line-height: 1; flex-shrink: 0; }
+
+    .product-card {
+      background: #fff; border-radius: 24px; overflow: hidden;
+      box-shadow: 0 2px 8px rgba(134,178,197,0.12), 0 12px 48px rgba(134,178,197,0.12);
+    }
+
+    .benefit-row { display: flex; align-items: center; gap: 12px; }
+    .benefit-icon {
+      width: 34px; height: 34px; border-radius: 10px; background: #e8f1f5;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    .ingr-card {
+      background: #fff; border-radius: 16px; padding: 22px;
+      border-left-width: 3px; border-left-style: solid;
+      box-shadow: 0 2px 8px rgba(134,178,197,0.1), 0 4px 16px rgba(134,178,197,0.07);
+      transition: transform 0.25s cubic-bezier(0.22,1,0.36,1), box-shadow 0.25s ease;
+    }
+    .ingr-card:hover { transform: translateY(-4px); box-shadow: 0 8px 28px rgba(134,178,197,0.2), 0 2px 8px rgba(134,178,197,0.12); }
+
+    .testimonial-card {
+      background: #fff; border-radius: 20px; padding: 28px 28px 24px;
+      border-top: 3px solid #86b2c5;
+      box-shadow: 0 2px 8px rgba(134,178,197,0.1), 0 4px 20px rgba(134,178,197,0.08);
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), box-shadow 0.3s ease;
+    }
+
+    .star { color: #86b2c5; font-size: 1rem; }
+
+    footer { background: #111111; color: rgba(255,255,255,0.65); }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.18s ease; }
+    footer a:hover { color: #86b2c5; }
+    footer a:focus-visible { outline: 2px solid #86b2c5; outline-offset: 3px; border-radius: 2px; }
+  </style>
+</head>
+<body class="relative z-0">
+
+  <!-- NAV -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300" style="background:rgba(248,246,243,0.85);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
+      <a href="#" class="flex-shrink-0">
+        <img src="brand_assets/LOGO.png" alt="Petoku" class="h-8 md:h-9 w-auto" />
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="nav-link">Shop</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#ingredients" class="nav-link">Ingredients</a>
+      </nav>
+      <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="btn-primary text-sm py-2.5 px-6">Shop Now</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="pt-32 pb-24 md:pt-40 md:pb-32 overflow-hidden relative" style="background:#f8f6f3;">
+
+      <!-- Smooth color orbs -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div class="absolute" style="width:900px; height:900px; top:-300px; right:-200px; background:radial-gradient(circle at center, rgba(134,178,197,0.18) 0%, rgba(134,178,197,0.06) 40%, transparent 65%);"></div>
+        <div class="absolute" style="width:600px; height:600px; bottom:-200px; left:-100px; background:radial-gradient(circle at center, rgba(196,220,232,0.15) 0%, rgba(196,220,232,0.04) 45%, transparent 65%);"></div>
+      </div>
+
+      <!-- DENTAL POWDER watermark -->
+      <div class="absolute inset-0 overflow-hidden pointer-events-none flex items-center justify-end pr-4" aria-hidden="true">
+        <span style="font-family:'Syne',sans-serif; font-size:min(11rem,18vw); font-weight:800; color:rgba(134,178,197,0.07); letter-spacing:-0.03em; line-height:1; white-space:nowrap; user-select:none;">DENTAL POWDER</span>
+      </div>
+
+
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+        <div class="flex flex-col md:flex-row items-center gap-12 md:gap-8 lg:gap-16">
+
+          <div class="flex-1 max-w-xl">
+            <div class="reveal mb-5">
+              <span class="badge">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#3d809b" stroke-width="1.5"/><path d="M4.5 7l2 2 3-3" stroke="#3d809b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Veterinarian Recommended
+              </span>
+            </div>
+            <h1 class="reveal delay-1 font-display tracking-tightest text-ink mb-5"
+              style="font-size:clamp(3.5rem,7vw,5.5rem); line-height:1.0;">
+              A Healthier<br />
+              <span style="color:#3d809b;">Smile</span><br />
+              Starts Here.
+            </h1>
+            <p class="reveal delay-2 font-body text-lg mb-8 max-w-md" style="color:#4a4a4a; line-height:1.7;">
+              12 All Natural Ingredients. Zero Synthetic Compounds.<br />
+              Enzyme-powered dental care your dog will actually enjoy.
+            </p>
+            <div class="reveal delay-3 flex flex-wrap items-center gap-4 mb-10">
+              <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="btn-primary">Shop Now</a>
+              <a href="#product" class="btn-outline">See the Formula</a>
+            </div>
+            <div class="reveal delay-4 flex flex-wrap gap-2">
+              <span class="badge">All Natural</span>
+              <span class="badge">Enzyme-Powered</span>
+              <span class="badge">2B CFU Probiotics</span>
+            </div>
+          </div>
+
+          <div class="flex-1 flex justify-center md:justify-end reveal delay-2">
+            <div style="filter:drop-shadow(0 32px 72px rgba(61,128,155,0.3)) drop-shadow(0 8px 24px rgba(61,128,155,0.2));">
+              <img src="brand_assets/2026_Petoku_packaging_-_Final-removebg-preview.png"
+                alt="Petoku Dental Powder"
+                class="w-80 md:w-88 lg:w-[420px] rounded-2xl" />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUST MARQUEE -->
+    <section style="background:#fff; border-top:1px solid rgba(134,178,197,0.2); border-bottom:1px solid rgba(134,178,197,0.2); overflow:hidden; padding:13px 0;">
+      <div class="marquee-track">
+        <span class="marquee-item">12 Natural Ingredients</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Veterinarian Recommended</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Enzyme-Powered Defense</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">2B CFU Probiotics</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Chicken Liver Flavor Dogs Love</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Gentle on Sensitive Stomachs</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Zero Synthetic Compounds</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">12 Natural Ingredients</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Veterinarian Recommended</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Enzyme-Powered Defense</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">2B CFU Probiotics</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Chicken Liver Flavor Dogs Love</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Gentle on Sensitive Stomachs</span><span class="marquee-dot">·</span>
+        <span class="marquee-item">Zero Synthetic Compounds</span><span class="marquee-dot">·</span>
+      </div>
+    </section>
+
+    <!-- PRODUCT / FORMULA -->
+    <section id="product" class="py-20 md:py-28 relative overflow-hidden" style="background:#f8f6f3;">
+      <div class="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden="true">
+        <span style="font-family:'Syne',sans-serif; font-size:min(30rem,52vw); font-weight:800; color:rgba(134,178,197,0.055); line-height:1; user-select:none;">12</span>
+      </div>
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+
+        <div class="text-center mb-14 reveal">
+          <p class="section-label mb-3">Our Formula</p>
+          <h2 class="font-display text-4xl md:text-5xl tracking-tighter text-ink">
+            Science-Backed <span style="color:#3d809b;">Dental</span> Care
+          </h2>
+        </div>
+
+        <div class="product-card reveal delay-1">
+          <div class="flex flex-col md:flex-row items-stretch">
+            <div class="md:w-2/5 relative min-h-[320px]" style="background:linear-gradient(145deg,#2e6a82 0%,#3d809b 40%,#86b2c5 80%,#c4dce8 100%);">
+              <div class="p-10 flex items-center justify-center h-full">
+                <img src="brand_assets/2026_Petoku_packaging_-_Final-removebg-preview.png"
+                  alt="Petoku Dental Powder"
+                  class="w-56 md:w-64 rounded-xl"
+                  style="filter:drop-shadow(0 16px 40px rgba(17,17,17,0.28));" />
+              </div>
+              <div class="absolute top-5 left-5">
+                <span class="badge badge-dark text-xs py-1.5 px-3">Advanced Formula</span>
+              </div>
+            </div>
+
+            <div class="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
+              <p class="section-label mb-2">Petoku</p>
+              <h3 class="font-display text-3xl md:text-4xl text-ink mb-1" style="letter-spacing:-0.02em;">Dental Powder</h3>
+              <p class="font-body font-semibold text-base mb-4" style="color:#3d809b;">Enzyme-Powered Defense</p>
+              <p class="font-body text-sm mb-7" style="color:#999; line-height:1.6;">
+                70 g / 2.5 oz &nbsp;·&nbsp; Chicken Liver Flavor &nbsp;·&nbsp; Gentle on Sensitive Stomachs
+              </p>
+              <div class="space-y-3 mb-9">
+                <div class="benefit-row">
+                  <div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8.5C3.8 10.3 5.6 11.5 8 11.5C10.4 11.5 12.2 10.3 13 8.5" stroke="#3d809b" stroke-width="1.5" stroke-linecap="round"/><circle cx="5.5" cy="5.5" r="1" fill="#3d809b"/><circle cx="10.5" cy="5.5" r="1" fill="#3d809b"/></svg></div>
+                  <span class="font-body text-sm font-medium text-ink">Freshens Breath</span>
+                </div>
+                <div class="benefit-row">
+                  <div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 2L9.6 6H14L10.8 8.4L12 12.4L8 10L4 12.4L5.2 8.4L2 6H6.4L8 2Z" fill="#3d809b"/></svg></div>
+                  <span class="font-body text-sm font-medium text-ink">Fights Plaque</span>
+                </div>
+                <div class="benefit-row">
+                  <div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M8 1.5C4.41 1.5 1.5 4.41 1.5 8C1.5 11.59 4.41 14.5 8 14.5C11.59 14.5 14.5 11.59 14.5 8C14.5 4.41 11.59 1.5 8 1.5ZM6.5 11.25L3.25 8L4.31 6.94L6.5 9.12L11.69 3.94L12.75 5L6.5 11.25Z" fill="#3d809b"/></svg></div>
+                  <span class="font-body text-sm font-medium text-ink">Prevents Tartar</span>
+                </div>
+                <div class="benefit-row">
+                  <div class="benefit-icon"><svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="6" r="2" fill="#3d809b"/><path d="M4 13c0-2.21 1.79-4 4-4s4 1.79 4 4" stroke="#3d809b" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+                  <span class="font-body text-sm font-medium text-ink">Healthy Gums</span>
+                </div>
+              </div>
+              <div class="flex flex-wrap items-center gap-4 pt-7" style="border-top:1px solid rgba(134,178,197,0.2);">
+                <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="btn-primary">Shop Now</a>
+                <div>
+                  <p class="font-body text-sm" style="color:#aaa;">Free shipping on orders over $40</p>
+                  <p class="font-body text-xs mt-0.5" style="color:#86b2c5;">Veterinarian Recommended</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-10 rounded-2xl p-6 text-center reveal delay-2"
+          style="background:linear-gradient(135deg,#e8f1f5 0%,#c4dce8 100%);">
+          <p class="font-display text-xl md:text-2xl text-ink" style="font-weight:600; letter-spacing:-0.02em;">
+            <strong style="color:#3d809b;">12</strong> All Natural Ingredients.
+            <strong style="color:#3d809b;">Zero</strong> Synthetic Compounds.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- INGREDIENTS — dark -->
+    <section id="ingredients" class="py-20 md:py-28 relative overflow-hidden" style="background:#f2f4f6;">
+      <div class="absolute inset-0 flex items-end justify-start overflow-hidden pointer-events-none" aria-hidden="true">
+        <span style="font-family:'Syne',sans-serif; font-size:min(26rem,42vw); font-weight:800; color:rgba(61,128,155,0.04); line-height:0.85; user-select:none; padding-left:1.5rem; transform:translateY(12%);">09</span>
+      </div>
+
+      <div class="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+        <div class="text-center mb-14 reveal">
+          <p class="section-label mb-3">What's Inside</p>
+          <h2 class="font-display text-4xl md:text-5xl tracking-tighter text-ink">
+            12 All Natural <span style="color:#3d809b;">Ingredients</span>
+          </h2>
+          <p class="font-body text-base mt-4 max-w-xl mx-auto" style="color:#666; line-height:1.7;">
+            Every ingredient is chosen for a specific purpose — no fillers, no synthetic compounds, just clean science.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
+
+          <div class="ingr-card reveal" style="border-left-color:#86b2c5;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#3d809b,#2e6a82);">Pro</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Dental Defense Pro Probiotic</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#3d809b; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(61,128,155,0.1); border-radius:4px;">2B CFU</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999; font-style:italic;">Lactobacillus reuteri &amp; Lactobacillus paracasei</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">Each strain chosen to target bacteria that cause plaque buildup and bad breath.</p>
+          </div>
+
+          <div class="ingr-card reveal delay-1" style="border-left-color:#5ea88a;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#5a9e72,#3d7a56);">BA</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Brown Algae</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#5ea88a; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(94,168,138,0.12); border-radius:4px;">300 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999; font-style:italic;">Ascophyllum nodosum</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">Clinically proven to stop plaque-causing bacteria from sticking to teeth.</p>
+          </div>
+
+          <div class="ingr-card reveal delay-2" style="border-left-color:#7fa8c5;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#86b2c5,#3d809b);">Ca</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Calcium Carbonate</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#7fa8c5; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(127,168,197,0.12); border-radius:4px;">100 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999;">&nbsp;</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">A gentle, natural polish to help scrub away early plaque buildup on tooth surfaces.</p>
+          </div>
+
+          <div class="ingr-card reveal" style="border-left-color:#5aaa6a;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#6bab6b,#4a8a4a);">GT</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Green Tea Extract</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#5aaa6a; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(90,170,106,0.12); border-radius:4px;">100 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999; font-style:italic;">Decaffeinated</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">Natural antioxidants that calm irritated gums and help keep breath fresh.</p>
+          </div>
+
+          <div class="ingr-card reveal delay-1" style="border-left-color:#8ab86a;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#8fba6e,#6a9450);">NL</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Neem Leaf Powder</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#8ab86a; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(138,184,106,0.12); border-radius:4px;">80 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999; font-style:italic;">Azadirachta indica</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">Helps cleanse the mouth and combat harmful bacteria.</p>
+          </div>
+
+          <div class="ingr-card reveal delay-2" style="border-left-color:#9aba5a;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#7abf7a,#559955);">PL</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Parsley Leaf Powder</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#9aba5a; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(154,186,90,0.12); border-radius:4px;">70 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999;">&nbsp;</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">A natural deodorizer that helps neutralize bad breath.</p>
+          </div>
+
+          <div class="ingr-card reveal" style="border-left-color:#6890c5;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#6b9ec5,#4a7ea8);">Zn</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Zinc Citrate</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#6890c5; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(104,144,197,0.12); border-radius:4px;">30 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999;">&nbsp;</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">Keeps gums strong and healthy; fights the bacteria that cause plaque.</p>
+          </div>
+
+          <div class="ingr-card reveal delay-1" style="border-left-color:#c59050;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#c5966b,#a87040);">Q10</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Coenzyme Q10</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#c59050; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(197,144,80,0.12); border-radius:4px;">15 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999;">&nbsp;</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">Supports healthy gums and helps reduce redness and irritation.</p>
+          </div>
+
+          <div class="ingr-card reveal delay-2" style="border-left-color:#aa6ac5;">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-body font-bold" style="background:linear-gradient(135deg,#b586c5,#8a5ea8);">GO</div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center justify-between gap-2 flex-wrap">
+                  <h4 class="font-body font-semibold text-sm text-ink leading-tight">Glucose Oxidase</h4>
+                  <span style="font-family:'Courier New',monospace; font-size:0.6875rem; color:#aa6ac5; letter-spacing:0.04em; white-space:nowrap; flex-shrink:0; padding:3px 8px; background:rgba(170,106,197,0.12); border-radius:4px;">10 mg</span>
+                </div>
+                <p class="font-body text-xs mt-0.5" style="color:#999;">&nbsp;</p>
+              </div>
+            </div>
+            <p class="font-body text-xs" style="color:#555; line-height:1.6;">Natural enzyme with an antibacterial effect — acts like a built-in mouth rinse.</p>
+          </div>
+
+        </div>
+
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6 reveal"
+          style="background:#fff; border:1px solid rgba(134,178,197,0.2); border-radius:16px; padding:24px 32px;">
+          <div>
+            <p style="font-family:'Courier New',monospace; font-size:0.625rem; letter-spacing:0.14em; color:#86b2c5; text-transform:uppercase; margin-bottom:8px;">Other Ingredients</p>
+            <p class="font-body text-sm" style="color:#555;">
+              Nutritional Yeast &nbsp;·&nbsp; Rice Bran Powder &nbsp;·&nbsp; Hydrolyzed Chicken Liver
+            </p>
+          </div>
+          <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="btn-primary flex-shrink-0">
+            Shop Now
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="py-20 md:py-28 overflow-hidden"
+      style="background:radial-gradient(ellipse 70% 80% at 95% 50%, rgba(134,178,197,0.13) 0%, transparent 60%), #f0f5f8;">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="flex flex-col md:flex-row items-center gap-14 md:gap-16 lg:gap-24">
+
+          <div class="flex-1 max-w-lg">
+            <p class="section-label mb-5 reveal">Our Story</p>
+            <div class="reveal delay-1 mb-7" style="border-left:3px solid #86b2c5; padding-left:20px;">
+              <p class="font-display text-2xl text-ink" style="letter-spacing:-0.02em; line-height:1.35; font-style:italic;">
+                "No fillers.<br/>No shortcuts.<br/>Just science."
+              </p>
+            </div>
+            <h2 class="reveal delay-1 font-display text-4xl md:text-5xl tracking-tighter text-ink mb-6" style="line-height:1.1;">
+              Made for pets<br />who deserve better.
+            </h2>
+            <p class="reveal delay-2 font-body text-base mb-5" style="color:#4a5568; line-height:1.7;">
+              Petoku was born from a simple belief: our pets deserve the same thoughtful care we give ourselves. We set out to create dental health products that are both genuinely effective and completely clean — no fillers, no synthetic compounds, just science-backed ingredients sourced from nature.
+            </p>
+            <p class="reveal delay-3 font-body text-base mb-8" style="color:#4a5568; line-height:1.7;">
+              Our enzyme-powered formula works with your dog's natural biology to break down plaque and fight bad breath — all while being gentle enough for even the most sensitive stomachs. Because a healthier pet is a happier pet.
+            </p>
+            <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener"
+              class="btn-outline reveal delay-4" style="border-color:#86b2c5; color:#3d809b;">
+              Shop on Amazon
+            </a>
+          </div>
+
+          <div class="flex-1 flex items-center justify-center reveal delay-2">
+            <div class="relative" style="max-width:360px; width:100%;">
+              <div class="relative rounded-3xl overflow-hidden"
+                style="box-shadow:0 16px 64px rgba(61,128,155,0.22), 0 4px 16px rgba(61,128,155,0.14);">
+                <img src="brand_assets/2026_Petoku_packaging_-_Final-removebg-preview.png"
+                  alt="Petoku Dental Powder" class="w-full block" />
+                <div class="absolute inset-0"
+                  style="background:linear-gradient(135deg,rgba(61,128,155,0.28) 0%,transparent 55%); pointer-events:none;"></div>
+              </div>
+              <div class="absolute -bottom-5 -right-5 rounded-2xl px-5 py-4"
+                style="background:#fff; box-shadow:0 8px 28px rgba(134,178,197,0.25);">
+                <p class="font-display mb-0" style="font-size:2rem; letter-spacing:-0.03em; color:#3d809b; line-height:1;">12</p>
+                <p class="font-body text-xs font-semibold" style="color:#999; letter-spacing:0.06em; text-transform:uppercase;">Natural Ingredients</p>
+              </div>
+              <div class="absolute -top-4 -left-4 badge"
+                style="background:#e8f1f5; box-shadow:0 4px 16px rgba(134,178,197,0.2);">
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="6" stroke="#3d809b" stroke-width="1.5"/><path d="M4.5 7l2 2 3-3" stroke="#3d809b" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Vet Approved
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIALS -->
+    <section class="py-20 md:py-28" style="background:#f8f6f3;">
+      <div class="max-w-7xl mx-auto px-6 lg:px-10">
+        <div class="text-center mb-14 reveal">
+          <p class="section-label mb-3">Happy Pet Parents</p>
+          <h2 class="font-display text-4xl md:text-5xl tracking-tighter text-ink">What They're Saying</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <div class="testimonial-card reveal" id="tc1">
+            <div class="flex gap-1 mb-4"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="font-body text-base mb-6" style="color:#444; line-height:1.7;">"My dog's breath improved noticeably within two weeks. He actually gets excited at tooth-brushing time now because of the chicken liver flavor — total game changer."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-body font-semibold text-lg text-white flex-shrink-0" style="background:#86b2c5; font-weight:700;">S</div>
+              <div>
+                <p class="font-body font-semibold text-sm text-ink">Sarah M.</p>
+                <p class="font-body text-xs" style="color:#bbb;">Golden Retriever owner · Verified buyer</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card reveal delay-1" id="tc2">
+            <div class="flex gap-1 mb-4"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="font-body text-base mb-6" style="color:#444; line-height:1.7;">"Our vet recommended Petoku after noticing early tartar buildup. One month in and her last checkup was perfect. Love that it's all natural — no worries about what she's ingesting."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-body font-semibold text-lg text-white flex-shrink-0" style="background:#3d809b; font-weight:700;">J</div>
+              <div>
+                <p class="font-body font-semibold text-sm text-ink">James T.</p>
+                <p class="font-body text-xs" style="color:#bbb;">Labrador owner · Verified buyer</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial-card reveal delay-2" id="tc3">
+            <div class="flex gap-1 mb-4"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+            <p class="font-body text-base mb-6" style="color:#444; line-height:1.7;">"Milo has a super sensitive stomach so I was nervous to try something new. No issues at all — he loves the taste and his teeth look visibly cleaner. Would absolutely recommend."</p>
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full flex items-center justify-center font-body font-semibold text-lg text-white flex-shrink-0" style="background:#86b2c5; font-weight:700;">R</div>
+              <div>
+                <p class="font-body font-semibold text-sm text-ink">Rachel K.</p>
+                <p class="font-body text-xs" style="color:#bbb;">French Bulldog owner · Verified buyer</p>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA BANNER -->
+    <section class="py-16 md:py-20 relative overflow-hidden"
+      style="background:linear-gradient(135deg,#2e6a82 0%,#3d809b 50%,#4a8fac 100%);">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <svg class="absolute -right-20 -top-20 w-[400px] h-[400px]" viewBox="0 0 400 400" fill="none">
+          <path d="M320,220Q300,340,200,360Q100,380,60,270Q20,160,90,90Q160,20,250,60Q340,100,320,220Z" fill="rgba(255,255,255,0.04)"/>
+        </svg>
+      </div>
+      <div class="max-w-3xl mx-auto px-6 lg:px-10 text-center relative z-10">
+        <h2 class="font-display text-4xl md:text-5xl tracking-tighter text-white mb-4 reveal">
+          Give your dog the smile they deserve.
+        </h2>
+        <p class="font-body text-base mb-8 reveal delay-1" style="color:rgba(255,255,255,0.72); line-height:1.7;">
+          Join thousands of pet parents who've made the switch to clean, enzyme-powered dental care.
+        </p>
+        <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener"
+          class="inline-block btn-primary reveal delay-2"
+          style="background:#fff; color:#3d809b; box-shadow:0 4px 24px rgba(0,0,0,0.18);">
+          Shop Petoku Now
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="position:relative; overflow:hidden;">
+    <div class="absolute bottom-0 inset-x-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <p style="font-family:'Syne',sans-serif; font-size:min(14rem,22vw); font-weight:800; color:rgba(255,255,255,0.025); line-height:0.8; letter-spacing:-0.03em; text-align:center; user-select:none; margin:0;">PETOKU</p>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 relative z-10">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div>
+          <img src="brand_assets/LOGO.png" alt="Petoku" class="h-8 w-auto mb-3" style="filter:brightness(0) invert(1);" />
+          <p class="font-body text-xs" style="color:rgba(255,255,255,0.28); letter-spacing:0.1em; text-transform:uppercase;">Natural Pet Dental Care</p>
+        </div>
+        <nav class="flex flex-wrap gap-x-8 gap-y-3">
+          <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="font-body text-sm">Shop</a>
+          <a href="#about" class="font-body text-sm">About</a>
+          <a href="#ingredients" class="font-body text-sm">Ingredients</a>
+          <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="font-body text-sm">Contact</a>
+        </nav>
+        <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl"
+          style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); transition:background 0.2s ease;"
+          onmouseenter="this.style.background='rgba(255,255,255,0.11)'"
+          onmouseleave="this.style.background='rgba(255,255,255,0.06)'"
+          onfocus="this.style.background='rgba(255,255,255,0.11)'"
+          onblur="this.style.background='rgba(255,255,255,0.06)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M3.5 17.5C7 20 11.5 21 16 19.5C18 18.8 19.5 17.8 20.5 16.5" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M20.5 16.5L22 18" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M4 6C5 4 7 3 9 3C12 3 14.5 5 14.5 8C14.5 11 12.5 12.5 10 12.5C8.5 12.5 7 12 6 11" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span class="font-body text-xs font-semibold" style="color:rgba(255,255,255,0.65); letter-spacing:0.02em;">Find us on Amazon</span>
+        </a>
+      </div>
+      <div class="mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4"
+        style="border-top:1px solid rgba(255,255,255,0.07);">
+        <p class="font-body text-xs" style="color:rgba(255,255,255,0.22);">© 2026 Petoku. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="font-body text-xs" style="color:rgba(255,255,255,0.22);">Privacy Policy</a>
+          <a href="#" class="font-body text-xs" style="color:rgba(255,255,255,0.22);">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.style.background = 'rgba(248,246,243,0.94)';
+        navbar.style.backdropFilter = 'blur(14px)';
+        navbar.style.webkitBackdropFilter = 'blur(14px)';
+        navbar.style.boxShadow = '0 1px 0 rgba(134,178,197,0.18), 0 4px 16px rgba(134,178,197,0.08)';
+      } else {
+        navbar.style.background = 'rgba(248,246,243,0.85)';
+        navbar.style.backdropFilter = '';
+        navbar.style.webkitBackdropFilter = '';
+        navbar.style.boxShadow = 'none';
+      }
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const rotations = [0.5, -0.4, 0.35];
+    ['tc1','tc2','tc3'].forEach((id, i) => {
+      const card = document.getElementById(id);
+      if (!card) return;
+      card.addEventListener('mouseenter', () => {
+        card.style.transform = `translateY(-6px) rotate(${rotations[i]}deg)`;
+        card.style.boxShadow = '0 12px 36px rgba(134,178,197,0.22), 0 4px 12px rgba(134,178,197,0.12)';
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+        card.style.boxShadow = '';
+      });
+    });
+  </script>
+
+</body>
+</html>
