@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FAQ — Petoku Dental Powder for Dogs</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300;1,9..40,400&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            blue: {
+              primary: '#86b2c5',
+              dark:    '#3d809b',
+              deeper:  '#2e6a82',
+              light:   '#c4dce8',
+              pale:    '#e8f1f5',
+            },
+            cream: '#f8f6f3',
+            ink:   '#111111',
+          },
+          fontFamily: {
+            display: ['"DM Serif Display"', 'Georgia', 'serif'],
+            body:    ['"DM Sans"', 'system-ui', 'sans-serif'],
+          },
+          letterSpacing: {
+            tightest: '-0.04em',
+            tighter:  '-0.03em',
+            wide:     '0.08em',
+            widest:   '0.14em',
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { background-color: #f8f6f3; font-family: 'DM Sans', system-ui, sans-serif; color: #111111; }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1), transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .reveal.revealed { opacity: 1; transform: translateY(0); }
+    .reveal.delay-1 { transition-delay: 0.12s; }
+    .reveal.delay-2 { transition-delay: 0.24s; }
+    .reveal.delay-3 { transition-delay: 0.38s; }
+
+    .nav-link {
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.9375rem;
+      color: #111; text-decoration: none; padding: 6px 0; position: relative;
+    }
+    .nav-link::after {
+      content: ''; display: block; height: 2px; background: #86b2c5;
+      transform: scaleX(0); transform-origin: left;
+      transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .nav-link:hover { color: #3d809b; }
+    .nav-link:hover::after { transform: scaleX(1); }
+    .nav-link.active-page { color: #3d809b; }
+    .nav-link.active-page::after { transform: scaleX(1); }
+    .nav-link:focus-visible { outline: 2px solid #86b2c5; outline-offset: 4px; border-radius: 2px; }
+
+    .btn-primary {
+      background-color: #3d809b; color: #fff;
+      padding: 14px 32px; border-radius: 100px;
+      font-family: 'DM Sans', sans-serif; font-weight: 600; font-size: 0.9375rem;
+      letter-spacing: 0.01em; border: none; cursor: pointer; display: inline-block;
+      box-shadow: 0 4px 16px rgba(61,128,155,0.3), 0 1px 4px rgba(61,128,155,0.2);
+      transition: background-color 0.2s ease, transform 0.2s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary:hover  { background-color: #2e6a82; transform: scale(1.04) translateY(-1px); box-shadow: 0 8px 28px rgba(61,128,155,0.38); }
+    .btn-primary:active { transform: scale(0.97); box-shadow: 0 2px 8px rgba(61,128,155,0.2); }
+    .btn-primary:focus-visible { outline: 3px solid #86b2c5; outline-offset: 3px; }
+
+    .section-label {
+      font-family: 'DM Sans', sans-serif; font-weight: 600;
+      font-size: 0.6875rem; letter-spacing: 0.16em; text-transform: uppercase; color: #86b2c5;
+    }
+
+    /* FAQ */
+    .faq-filter-btn {
+      font-family: 'DM Sans', sans-serif; font-size: 0.8125rem; font-weight: 600;
+      letter-spacing: 0.04em; padding: 8px 18px; border-radius: 100px; border: 1.5px solid rgba(134,178,197,0.35);
+      background: transparent; color: #3d809b; cursor: pointer;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .faq-filter-btn:hover { background: #e8f1f5; border-color: #86b2c5; }
+    .faq-filter-btn.active { background: #3d809b; color: #fff; border-color: #3d809b; }
+    .faq-filter-btn:focus-visible { outline: 2px solid #86b2c5; outline-offset: 3px; }
+
+    .faq-item {
+      border-bottom: 1.5px solid rgba(134,178,197,0.25);
+      transition: background 0.2s ease;
+    }
+    .faq-item.hidden-faq { display: none; }
+
+    .faq-question {
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      width: 100%; padding: 24px 0; background: transparent; border: none; cursor: pointer;
+      text-align: left;
+    }
+    .faq-question-text {
+      font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 1rem; color: #111; line-height: 1.5;
+      transition: color 0.2s ease;
+    }
+    .faq-item.open .faq-question-text { color: #3d809b; }
+    .faq-chevron {
+      flex-shrink: 0; width: 28px; height: 28px; border-radius: 50%;
+      border: 1.5px solid rgba(134,178,197,0.35);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-item.open .faq-chevron {
+      background: #3d809b; border-color: #3d809b; transform: rotate(45deg);
+    }
+    .faq-item.open .faq-chevron svg line { stroke: #fff; }
+
+    .faq-answer {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.4s cubic-bezier(0.22,1,0.36,1);
+    }
+    .faq-answer-inner {
+      font-family: 'DM Sans', sans-serif; font-size: 0.9375rem; color: #555; line-height: 1.75;
+      padding-bottom: 24px; max-width: 680px;
+    }
+    .faq-answer-inner strong { color: #3d809b; font-weight: 600; }
+    .faq-item.open .faq-answer { max-height: 800px; }
+
+    footer { background: #111111; color: rgba(255,255,255,0.65); }
+    footer a { color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.18s ease; }
+    footer a:hover { color: #86b2c5; }
+    footer a:focus-visible { outline: 2px solid #86b2c5; outline-offset: 3px; border-radius: 2px; }
+  </style>
+</head>
+<body class="relative z-0">
+
+  <!-- NAV -->
+  <header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-300" style="background:rgba(248,246,243,0.85);">
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 flex items-center justify-between h-16">
+      <a href="index.html" class="flex-shrink-0">
+        <img src="brand_assets/LOGO.png" alt="Petoku" class="h-8 md:h-9 w-auto" />
+      </a>
+      <nav class="hidden md:flex items-center gap-8">
+        <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="nav-link">Shop</a>
+        <a href="index.html#about" class="nav-link">About</a>
+        <a href="index.html#ingredients" class="nav-link">Ingredients</a>
+        <a href="faq.html" class="nav-link active-page">FAQ</a>
+      </nav>
+      <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="btn-primary text-sm py-2.5 px-6">Shop Now</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- PAGE HERO -->
+    <section class="pt-32 pb-16 md:pt-40 md:pb-20 relative overflow-hidden" style="background:#f8f6f3;">
+      <div class="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <div class="absolute" style="width:700px; height:700px; top:-250px; right:-150px; background:radial-gradient(circle at center, rgba(134,178,197,0.14) 0%, rgba(134,178,197,0.04) 45%, transparent 65%);"></div>
+      </div>
+      <div class="max-w-3xl mx-auto px-6 lg:px-10 relative z-10">
+        <p class="section-label mb-4 reveal">Got Questions?</p>
+        <h1 class="font-display tracking-tighter text-ink mb-4 reveal delay-1" style="font-size:clamp(2.5rem,5vw,3.5rem); line-height:1.1;">Everything You Need<br>to Know</h1>
+        <p class="font-body text-base reveal delay-2" style="color:#666; line-height:1.7; max-width:480px;">
+          Real answers about how Petoku works, what's inside, and what to expect for your dog.
+        </p>
+      </div>
+    </section>
+
+    <!-- FAQ SECTION -->
+    <section class="pb-24 md:pb-32" style="background:#f8f6f3;">
+      <div class="max-w-3xl mx-auto px-6 lg:px-10">
+
+        <!-- Filter pills -->
+        <div class="flex flex-wrap gap-2 mb-10 reveal">
+          <button class="faq-filter-btn active" data-filter="all">All Questions</button>
+          <button class="faq-filter-btn" data-filter="how-it-works">How It Works</button>
+          <button class="faq-filter-btn" data-filter="ingredients">Ingredients</button>
+          <button class="faq-filter-btn" data-filter="usage">Usage</button>
+          <button class="faq-filter-btn" data-filter="safety">Safety</button>
+        </div>
+
+        <!-- Accordion -->
+        <div class="reveal delay-1" style="border-top:1.5px solid rgba(134,178,197,0.25);">
+
+          <div class="faq-item" data-category="how-it-works">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">How does Petoku actually improve my dog's teeth and breath?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                When you sprinkle Petoku onto your dog's food, saliva becomes the delivery system. As your dog chews and swallows, the active ingredients are distributed throughout the mouth and carried across teeth, gums, and oral surfaces.<br><br>
+                The key is <strong>Ascophyllum nodosum</strong> (brown algae), our hero ingredient. It works both topically and systemically: after digestion, it is secreted back into saliva, where it prevents plaque-forming bacteria from adhering to tooth surfaces. Meanwhile, the <strong>Glucose Oxidase enzyme</strong> reacts with glucose in the mouth to produce a natural low-level antibacterial effect continuously during meals. <strong>Zinc Citrate</strong> helps inhibit bacterial adhesion and supports healthy gums, contributing to a cleaner oral environment over time. The result is a multi-front approach that tackles plaque, tartar, and breath at the same time.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="how-it-works">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">How long does it take to see results?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Most pet parents begin to notice improvements within <strong>3 to 8 weeks</strong> of consistent daily use. Results vary by dog depending on their baseline oral health, age, and diet. Breath improvements and reduced plaque are often among the first things pet parents observe, while more visible tartar reduction can take longer as the formula works by gradually shifting the bacterial environment rather than acting as a one-time treatment. Some dogs see changes closer to 3 weeks; others may take the full 8. Consistency every day is what drives results.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="usage">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">Does it work with wet food and kibble?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes, Petoku works well with both. <strong>Wet food</strong> distributes the powder more evenly and ensures strong saliva contact with the active ingredients. <strong>Kibble</strong> works great too, and offers a minor additional benefit since chewing dry food provides light mechanical abrasion on tooth surfaces. Simply sprinkle the recommended amount on top of your dog's regular meal once daily.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="usage">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">How do I know how much to use?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Dosage is based on your dog's weight:<br><br>
+                <strong>Small dogs under 25 lbs:</strong> 1 scoop per day (70-day supply)<br>
+                <strong>Medium dogs 26 to 50 lbs:</strong> 2 scoops per day (35-day supply)<br>
+                <strong>Large dogs 51 lbs and up:</strong> 3 scoops per day (20-day supply)<br><br>
+                A measuring scoop is included in every container. Just sprinkle directly onto food once daily, no mixing or prep required.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="safety">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">Is Petoku safe for dogs with sensitive stomachs?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes. Petoku is specifically formulated to be gentle on digestion. One of the key reasons we use <strong>Hydrolyzed Chicken Liver</strong> as a flavouring is that hydrolyzed proteins are pre-broken down into smaller peptides, making them far easier on a sensitive digestive system than intact proteins. This is the same principle used in veterinary sensitive stomach diets. All 12 ingredients are food-grade and contain <strong>zero synthetic compounds</strong>. The probiotic blend further supports gut health alongside oral health. If your dog has a known food allergy or a serious underlying health condition, we recommend checking with your veterinarian before introducing any new supplement.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="safety">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">Are there any dogs who should not use Petoku?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Petoku is safe for most adult dogs, but please review the following cautions carefully:<br><br>
+                <strong>Puppies under 1 year old:</strong> Wait until your dog is at least 12 months before introducing Petoku, as their systems are still developing.<br><br>
+                <strong>Pregnant or nursing dogs:</strong> Out of caution, we advise against use during pregnancy or while nursing without consulting your vet first.<br><br>
+                <strong>Dogs with liver disease:</strong> Several ingredients in the formula are metabolized through the liver. Use only under veterinary supervision if your dog has a known liver condition.<br><br>
+                <strong>Dogs with thyroid disease:</strong> Our formula contains Ascophyllum nodosum, a brown algae that naturally contains iodine. Excess iodine intake can interfere with thyroid function in dogs with pre-existing thyroid conditions. Consult your vet before use.<br><br>
+                <strong>Dogs with kidney disease:</strong> Some ingredients are processed through the kidneys, and Nutritional Yeast contains phosphorus which may be a concern for dogs on a phosphorus-restricted diet. Check with your vet if your dog has a known kidney condition.<br><br>
+                <strong>Dogs with a known chicken allergy:</strong> The formula contains Hydrolyzed Chicken Liver. While hydrolyzed proteins are significantly less allergenic than intact proteins, dogs with a severe chicken protein allergy should avoid use or consult a veterinarian first.<br><br>
+                <strong>Dogs on anticoagulant medications:</strong> Green Tea Extract contains vitamin K and certain polyphenols that can interact with anticoagulant drugs like warfarin. If your dog is on any blood-thinning medication, consult your vet before use.<br><br>
+                When in doubt, a quick check with your vet is always the right call.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="safety">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">Is Petoku a good choice for senior dogs?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Petoku is an excellent choice for senior dogs. As dogs age, gum tissue naturally weakens and becomes more prone to inflammation and recession. The formula includes <strong>Coenzyme Q10 (CoQ10)</strong>, a powerful antioxidant that supports gum tissue health and helps reduce redness and irritation. CoQ10 levels naturally decline with age in both humans and dogs, making supplementation particularly valuable for older dogs. Paired with the plaque-fighting and breath-freshening benefits of the full formula, Petoku supports the oral health needs that matter most as your dog gets older.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="safety">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">Does Petoku work for all breeds?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Yes. The formula is suitable for all breeds and sizes. Dosage is simply adjusted by weight, so whether you have a small Chihuahua or a large German Shepherd, the same product scales to their needs. Breeds that are more prone to dental issues, such as smaller breeds with crowded teeth, often see especially noticeable results.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="ingredients">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">What makes Petoku different from other dog dental products?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Most competing products rely on synthetic compounds like <strong>SHMP (sodium hexametaphosphate)</strong> to reduce tartar. Petoku uses only natural, science-backed ingredients with no synthetic additives. Our formula combines a clinically studied algae extract, a live probiotic blend, a natural enzyme system, and targeted botanicals to address plaque, tartar, and bad breath simultaneously. It is manufactured in the USA by an <strong>NASC Preferred Supplier</strong> in a cGMP-certified facility, meaning every batch meets rigorous quality standards.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="ingredients">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">What are the inactive ingredients and why are they included?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                The inactive ingredients are <strong>Nutritional Yeast, Rice Bran Powder, and Hydrolyzed Chicken Liver</strong>. These serve as natural binders and palatability enhancers, helping the powder flow evenly and ensuring dogs actually enjoy the taste. The chicken liver flavour is what makes Petoku something most dogs look forward to at mealtime.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="usage">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">Does Petoku replace professional vet dental cleanings?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                No, and we want to be upfront about that. Professional cleanings address existing hardened tartar (calculus) that has already mineralized onto the teeth, which no at-home product can fully reverse. What Petoku does is <strong>slow or prevent the buildup of new plaque and tartar</strong> through daily use, which can reduce how frequently your dog needs professional cleanings and make those visits easier. Think of it as maintenance between cleanings, not a replacement for them.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="usage">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">What if my dog refuses to eat food with the powder on it?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Most dogs take to Petoku right away thanks to the <strong>chicken liver flavour</strong>, which is naturally appealing to dogs. If your dog is hesitant at first, try starting with a smaller amount mixed into wet food to ease them in, then gradually increase to the full dose over a few days. Picky eaters typically adjust within the first week.
+              </div>
+            </div>
+          </div>
+
+          <div class="faq-item" data-category="usage">
+            <button class="faq-question" aria-expanded="false">
+              <span class="faq-question-text">Can I use Petoku alongside regular teeth brushing?</span>
+              <span class="faq-chevron" aria-hidden="true">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3d809b" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+              </span>
+            </button>
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Absolutely, and we encourage it. Petoku works best as a daily foundation, and brushing adds a mechanical layer of plaque removal that complements the biochemical action of the formula. Together they provide the most comprehensive oral care routine for your dog.
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /accordion -->
+
+        <!-- Bottom CTA -->
+        <div class="mt-14 reveal delay-2" style="background:#e8f1f5; border-radius:20px; padding:36px 40px; display:flex; align-items:center; justify-content:space-between; gap:24px; flex-wrap:wrap;">
+          <div>
+            <h3 class="font-display text-2xl text-ink mb-1">Ready to try Petoku?</h3>
+            <p class="font-body text-sm" style="color:#666;">Join pet parents giving their dogs cleaner teeth, fresher breath, and healthier gums.</p>
+          </div>
+          <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="btn-primary" style="white-space:nowrap;">Shop on Amazon</a>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer style="position:relative; overflow:hidden;">
+    <div class="absolute bottom-0 inset-x-0 overflow-hidden pointer-events-none" aria-hidden="true">
+      <p style="font-family:'Syne',sans-serif; font-size:min(14rem,22vw); font-weight:800; color:rgba(255,255,255,0.025); line-height:0.8; letter-spacing:-0.03em; text-align:center; user-select:none; margin:0;">PETOKU</p>
+    </div>
+    <div class="max-w-7xl mx-auto px-6 lg:px-10 py-12 relative z-10">
+      <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+        <div>
+          <img src="brand_assets/LOGO.png" alt="Petoku" class="h-8 w-auto mb-3" style="filter:brightness(0) invert(1);" />
+          <p class="font-body text-xs" style="color:rgba(255,255,255,0.28); letter-spacing:0.1em; text-transform:uppercase;">Natural Pet Dental Care</p>
+        </div>
+        <nav class="flex flex-wrap gap-x-8 gap-y-3">
+          <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener" class="font-body text-sm">Shop</a>
+          <a href="index.html#about" class="font-body text-sm">About</a>
+          <a href="index.html#ingredients" class="font-body text-sm">Ingredients</a>
+          <a href="faq.html" class="font-body text-sm">FAQ</a>
+        </nav>
+        <a href="https://www.amazon.com/shops/petoku" target="_blank" rel="noopener"
+          class="flex items-center gap-2 px-4 py-2.5 rounded-xl"
+          style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); transition:background 0.2s ease;"
+          onmouseenter="this.style.background='rgba(255,255,255,0.11)'"
+          onmouseleave="this.style.background='rgba(255,255,255,0.06)'"
+          onfocus="this.style.background='rgba(255,255,255,0.11)'"
+          onblur="this.style.background='rgba(255,255,255,0.06)'">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+            <path d="M3.5 17.5C7 20 11.5 21 16 19.5C18 18.8 19.5 17.8 20.5 16.5" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M20.5 16.5L22 18" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round"/>
+            <path d="M4 6C5 4 7 3 9 3C12 3 14.5 5 14.5 8C14.5 11 12.5 12.5 10 12.5C8.5 12.5 7 12 6 11" stroke="#ff9900" stroke-width="1.8" stroke-linecap="round"/>
+          </svg>
+          <span class="font-body text-xs font-semibold" style="color:rgba(255,255,255,0.65); letter-spacing:0.02em;">Find us on Amazon</span>
+        </a>
+      </div>
+      <div class="mt-10 pt-6 flex flex-col md:flex-row items-center justify-between gap-4"
+        style="border-top:1px solid rgba(255,255,255,0.07);">
+        <p class="font-body text-xs" style="color:rgba(255,255,255,0.22);">© 2026 Petoku. All rights reserved.</p>
+        <div class="flex gap-6">
+          <a href="#" class="font-body text-xs" style="color:rgba(255,255,255,0.22);">Privacy Policy</a>
+          <a href="#" class="font-body text-xs" style="color:rgba(255,255,255,0.22);">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 20) {
+        navbar.style.background = 'rgba(248,246,243,0.94)';
+        navbar.style.backdropFilter = 'blur(14px)';
+        navbar.style.webkitBackdropFilter = 'blur(14px)';
+        navbar.style.boxShadow = '0 1px 0 rgba(134,178,197,0.18), 0 4px 16px rgba(134,178,197,0.08)';
+      } else {
+        navbar.style.background = 'rgba(248,246,243,0.85)';
+        navbar.style.backdropFilter = '';
+        navbar.style.webkitBackdropFilter = '';
+        navbar.style.boxShadow = 'none';
+      }
+    }, { passive: true });
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // FAQ accordion
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        document.querySelectorAll('.faq-item.open').forEach(openItem => {
+          openItem.classList.remove('open');
+          openItem.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+    });
+
+    // FAQ filter
+    document.querySelectorAll('.faq-filter-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.faq-filter-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const filter = btn.dataset.filter;
+        document.querySelectorAll('.faq-item').forEach(item => {
+          if (filter === 'all' || item.dataset.category === filter) {
+            item.classList.remove('hidden-faq');
+          } else {
+            item.classList.add('hidden-faq');
+            item.classList.remove('open');
+            item.querySelector('.faq-question').setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>
